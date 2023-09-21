@@ -118,23 +118,17 @@ const dataFansMethods = {
         }
 
         // check valid
-        if (!ObjectId.isValid(id)) {
-            throw new Error("No fan with that ID to delete.");
-        }
+        if (!ObjectId.isValid(id)) throw new Error("No fan with that ID to delete.");
 
         // find fan
         const fansCollection = await fans();
         const thisFan = await fansCollection.findOne({_id: new ObjectId(id)});
-        if (thisFan === null) {
-            throw new Error("No fan with that ID to delete.");
-        }
+        if (thisFan === null) throw new Error("No fan with that ID to delete.");
 
         // delete fan
         const deleteResult = await fansCollection.deleteOne({ _id: new ObjectId(id) });
 
-        if (deleteResult.deletedCount === 0) {
-            throw new Error("Failed to delete fan.");
-        }
+        if (deleteResult.deletedCount === 0) throw new Error("Failed to delete fan.");
 
         return { ID: id, deleted: true };
 

@@ -1,11 +1,11 @@
-import dataFansMethods from './data/fans.js';
-import dataPostsMethods from './data/posts.js';
-import { closeConnection } from './config/mongoConnection.js'; 
+import dataFansMethods from '../data/fans.js';
+import dataPostsMethods from '../data/posts.js';
+import { closeConnection } from '../config/mongoConnection.js'; 
 
 (async () => {
 
     try {
-        
+
         // test creating a fan
         const createdFan = await dataFansMethods.createFan(
         "Cidolfus",
@@ -36,7 +36,7 @@ import { closeConnection } from './config/mongoConnection.js';
         const getPost1 = await dataPostsMethods.get(createdPost._id);
         console.log("Post information before:\n", getPost1);
 
-        // test adding comment to a post
+        // // test adding comment to a post
         const addedComment = await dataPostsMethods.addComment(createdFan._id, createdPost._id, "boi how");
         console.log("Test Comment added:", addedComment);
 
@@ -47,9 +47,14 @@ import { closeConnection } from './config/mongoConnection.js';
 
         // more test functions ---------------
 
-        // test deleting a fan by ID
         // const deleteFan = await dataFansMethods.deleteFan(createdFan._id);
-        // console.log(deleteFan);
+        // console.log("Fan: ", deleteFan);
+
+        // const deletePost = await dataPostsMethods.deletePost(createdPost._id);
+        // console.log("Post: ", deletePost);
+
+        // const deleteComment = await dataPostsMethods.deleteComment(createdFan._id, createdPost._id, addedComment._id);
+        // console.log("Deleted comment: ", deleteComment);
 
     }
 

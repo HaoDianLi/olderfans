@@ -1,8 +1,17 @@
 import express from 'express';
-const app = express();
+import exphbs from 'express-handlebars';
+import path from 'path';
+
 import configRoutes from './routes/index.js';
 
-app.use(express.json());
+const app = express();
+
+// Set Handlebars as the template engine
+app.engine('handlebars', exphbs());
+app.set('view engine', 'handlebars');
+app.set('views', path.join(__dirname, 'views')); // Set the views directory
+
+// Other middleware and route configurations
 
 configRoutes(app);
 
