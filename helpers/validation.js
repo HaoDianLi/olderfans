@@ -47,6 +47,8 @@ const helpers = {
             "org",
             "net",
             "gov",
+            "edu",
+            "mil",
         ];
 
         const parts = domain.split('.');

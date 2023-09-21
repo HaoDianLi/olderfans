@@ -3,11 +3,11 @@ import { fans, posts } from "../config/mongoCollections.js";
 import helpers from "../helpers/validation.js";
 import bcrypt from 'bcrypt'
 const saltRounds = 12;
-import fanData from "./fans.js";
+import dataPostsMethods from "./posts.js";
 
-const exportedMethods = {
+const dataFansMethods = {
 
-    async create(
+    async createFan(
         firstName,
         lastName,
         username,
@@ -16,12 +16,12 @@ const exportedMethods = {
         password
     ) {
 
-        // throw error if any field is empty
+        // check empty
         if (!firstName || !lastName || !username || !email || !birthDate || !password) {
             throw new Error("Error: All of the fields must be filled.");
         }
         
-        // throw error if names are not strings
+        // check names type
         if (typeof firstName !== "string") throw new Error("First name must be a string type value.");
         if (typeof lastName !== "string") throw new Error("Last name must be a string type value.");
         if (typeof username !== "string") throw new Error("Username name must be a string type value.");
@@ -91,51 +91,165 @@ const exportedMethods = {
             };
     
             const insertInfo = await fansCollection.insertOne(newFan);
-            if (insertInfo.insertedCount === 0) {
-                throw `Error: Could not insert new band.`;
-            }
+            if (insertInfo.insertedCount === 0) throw new Error("Could not add new fan.");
 
-            const newId = await insertInfo.insertedId.toString();
-            const fan = await this.get(newId.toString());
+            const newID = await insertInfo.insertedId.toString();
+            const fan = await this.get(newID.toString());
             fan._id = fan._id.toString();
-            return fan;
+            return { _id: newID, ...fan };
     },
 
-    async get(id){
+    async deleteFan(id) {
+
+        // check empty param
         if (!id) {
-            throw `Error: The ID must be provided. `;
+            throw new Error("The ID must be provided.");
         }
-        if (typeof id!=='string') {
-            throw `Error: The ID must be a string.`;
+
+        // check type
+        if (typeof id !== 'string') {
+            throw new Error("The ID must be a string.");
         }
+
+        // check data
         id = id.trim();
-        if (id.length==0 || id=="") {
-            throw `Error: The ID must not be empty spaces.`;
+        if (id.length === 0 || id === "") {
+            throw new Error("The ID must not be empty spaces.");
         }
+
+        // check valid
         if (!ObjectId.isValid(id)) {
-            throw 'invalid object ID';
+            throw new Error("No fan with that ID to delete.");
         }
+
+        // find fan
         const fansCollection = await fans();
         const thisFan = await fansCollection.findOne({_id: new ObjectId(id)});
         if (thisFan === null) {
-            throw 'Error: No fan with that ID';
+            throw new Error("No fan with that ID to delete.");
         }
+
+        // delete fan
+        const deleteResult = await fansCollection.deleteOne({ _id: new ObjectId(id) });
+
+        if (deleteResult.deletedCount === 0) {
+            throw new Error("Failed to delete fan.");
+        }
+
+        return { ID: id, deleted: true };
+
+    },
+
+    async get(id){
+
+        // check empty param
+        if (!id) {
+            throw new Error("The ID must be provided.");
+        }
+
+        // check type
+        if (typeof id !== 'string') {
+            throw new Error("The ID must be a string.");
+        }
+
+        // check data
+        id = id.trim();
+        if (id.length === 0 || id === "") {
+            throw new Error("The ID must not be empty spaces.");
+        }
+
+        // check valid
+        if (!ObjectId.isValid(id)) {
+            throw new Error("No fan with that ID to retrieve.");
+        }
+
+        // find fan
+        const fansCollection = await fans();
+        const thisFan = await fansCollection.findOne({_id: new ObjectId(id)});
+        if (thisFan === null) {
+            throw new Error("No fan with that ID to retrieve.");
+        }
+
+        // convert id to string
         thisFan._id = thisFan._id.toString();
     
         return thisFan;
-    }
+
+    },
+
+    async getFanInfo(idOrUsername) {
+
+        const fansCollection = await fans();
+
+        if (!idOrUsername) {
+            throw new Error("ID or username must be provided.");
+        }
+
+        let fan;
+
+        // Check if idOrUsername is a valid ObjectId
+        if (ObjectId.isValid(idOrUsername)) {
+            fan = await fansCollection.findOne({ _id: new ObjectId(idOrUsername) });
+
+            if (!fan) {
+                throw new Error("Fan not found.");
+            }
+
+            const {
+                firstName,
+                lastName,
+                username,
+                email,
+                birthDate,
+                posts,
+                fanComments,
+            } = fan;
+
+            return {
+                firstName,
+                lastName,
+                username,
+                email,
+                birthDate,
+                posts,
+                fanComments,
+            };
+        }
+
+        // Assuming idOrUsername is a username
+        else {
+            fan = await fansCollection.findOne({ username: idOrUsername });
+
+            if (!fan) {
+                throw new Error("Fan not found.");
+            }
+
+            const {
+                _id,
+                firstName,
+                lastName,
+                email,
+                birthDate,
+                posts,
+                fanComments,
+            } = fan;
+
+            return {
+                _id: _id.toString(),
+                firstName,
+                lastName,
+                email,
+                birthDate,
+                posts,
+                fanComments,
+            };
+        }
+
+    },
+
+
+
 
 };
 
-const testFan = await exportedMethods.create(
-    "Cidolfus",
-    "Telamon",
-    "ram.uh",
-    "cid@ffxvi.com",
-    "2000-01-01",
-    "testpassword"
-);
-
-console.log("Test Fan Created:", testFan);
-
-export default exportedMethods;
+export default dataFansMethods;
