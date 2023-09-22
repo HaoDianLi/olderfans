@@ -1,17 +1,29 @@
 import express from 'express';
 import exphbs from 'express-handlebars';
-import path from 'path';
+import { fileURLToPath } from 'url';
+import { dirname } from 'path';
 
 import configRoutes from './routes/index.js';
 
 const app = express();
 
-// Set Handlebars as the template engine
-app.engine('handlebars', exphbs());
-app.set('view engine', 'handlebars');
-app.set('views', path.join(__dirname, 'views')); // Set the views directory
+// set handlebars as the template engine
+app.engine('handlebars', exphbs.engine());
+app.set('view engine', 'handlebars'); // set view engine to handlebars
 
-// Other middleware and route configurations
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = dirname(__filename);
+const staticDir = express.static(__dirname + '/public');
+
+app.use('/public', staticDir);
+
+// middleware and route configs
+
+// updates currentYear in main 
+app.use((req, res, next) => {
+  res.locals.currentYear = new Date().getFullYear();
+  next();
+});
 
 configRoutes(app);
 

@@ -1,8 +1,10 @@
+import { ObjectId } from 'mongodb';
 import express from 'express';
 const router = express.Router();
-import { ObjectId } from 'mongodb';
+import axios from 'axios';
+import xss from 'xss';
 
 router
-    .route('/');
+    .get('/');
 
 export default router;
