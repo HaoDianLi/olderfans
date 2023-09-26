@@ -1,64 +1,41 @@
 @import url('https://fonts.cdnfonts.com/css/cute');
+@import url('https://fonts.cdnfonts.com/css/monday-ramen');
 
-/* reset default browser styles */
-body, h1, h2, p, ul, li {
+/* reset default browser */
+body, h1, h2, p, ul, li, footer {
     margin: 0;
     padding: 0;
 }
 
-/* font styles */
-
-/* @font-face {
-    font-family: 'Cute';
-    src: url('/public/fonts/Cute-Bold.otf') format('otf'),
-         url('/public/fonts/Spring.otf') format('otf');
-} */
-
-ul, ol {
-    list-style-type: none;
+footer {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 15px;
+    text-align: right;
 }
 
 body {
-    font-family: 'Spring', sans-serif;
+    font-family: 'spring', sans-serif;
     margin: 20px;
-    font-size: 30px;
+    font-size: 50px;
+    font-weight: bold;
 }
 
-h1 {
-    font-family: 'Cute', sans-serif;
-    font-size: 70px;
-    padding: 20px;
-}
-
+/* headings */
 h2 {
     font-size: 20px;
 }
 
 p {
-    font-size: 30px;
-    font-weight: bold;
-}
-
-/* color */
-body {
-    background-color: #f0f0f0;
-    color: #333;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 20px;
+    font-style: italic;
+    text-align: center;
 }
 
 /* links */
 a {
     color: #0078d4;
     text-decoration: none;
-}
-
-/* headings */
-h1, h2 {
-    color: #444;
-}
-
-/* Center text */
-.text-center {
-    text-align: center;
 }
 
 /* responsive layout */

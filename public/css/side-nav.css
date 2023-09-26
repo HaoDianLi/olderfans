@@ -1,0 +1,124 @@
+@import url('https://fonts.cdnfonts.com/css/cute');
+@import url('https://fonts.cdnfonts.com/css/monday-ramen');
+
+h1 {
+    font-family: 'Cute', sans-serif;
+    font-size: 60px;
+    text-align: center;
+    padding: 0;
+    margin: 0;
+    font-style: italic;
+}
+
+.older, .fans {
+    margin: 0;
+    margin-top: 20px;
+    margin-bottom: 30px;
+    padding: 0;
+    display: inline-block;
+}
+
+.older {
+    color: #bb6be0;
+    margin-right: -15px;
+}
+
+.fans {
+    color: #934ab4;
+}
+
+.side-header {
+    -webkit-box-align: end;
+    align-items: flex-end;
+    -webkit-box-flex: 1;
+    -webkit-flex-grow: 1;
+    flex-grow: 1;
+    -webkit-user-select: none;
+    user-select: none;
+    z-index: 3;
+}
+
+.wrapper {
+    position: fixed;
+    top: 0px;
+    height: 100%;
+    backface-visibility: hidden;
+}
+
+.side-nav {
+    overflow-y: auto;
+    height: 100%;
+    -webkit-box-pack: justify;
+    padding-left: 8px;
+    padding-right: 8px;
+    width: 250px;
+    background-color: #68b7db;
+    color: #fff;
+}
+
+.side-nav a {
+    text-decoration: none;
+    color: #fff;
+    display: block;
+    padding: 5px;
+    text-align: center;
+}
+
+.side-nav a:hover {
+    background-color: #22769c;
+}
+
+.side-opt {
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.side-top {
+    max-width: 100%;
+    padding-bottom: 2px;
+    padding-top: 2px;
+}
+
+.side-bot {
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-bottom: 4px;
+    margin-top: 2px;
+    width: 100%;
+}
+
+.navigation {
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-direction: normal;
+    -webkit-box-orient: vertical;
+    flex-direction: column;
+}
+
+.side-post {
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+    margin-top: 50px;
+    margin-bottom: 16px;
+    width: 100%;
+    text-align: center;
+}
+
+.side-info {
+    margin-bottom: 12px;
+    margin-top: 700px;
+    -webkit-align-items: center;
+    -webkit-box-align: center;
+    align-items: center;
+}
+
+.content {
+    flex: 1;
+    padding: 20px;
+    margin-left: 250px;
+    overflow-y: auto;
+}
