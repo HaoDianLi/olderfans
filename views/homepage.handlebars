@@ -1,9 +1,15 @@
 <head>
     <title>Homepage</title>
     <link rel="stylesheet" href="/public/css/main.css">
+    <link rel="stylesheet" href="/public/css/content.css">
 </head>
 <body>
 
-    <p></p>    
+    <p>Home</p>
+
+    <form action="/post" method="POST" class="form-box">
+        <input type="text" id="topic" name="topic" placeholder="What body part hurts today?" required>
+        <button type="submit">Post</button>
+    </form>
 
 </body>
